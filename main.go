@@ -24,10 +24,17 @@ func main() {
 	// Config App
 	app.Static("/", "./public")
 
-	// Routes
-	app.Get("/", func(c *fiber.Ctx) error {
-		return c.SendString("Hello, World!")
-	})
+	// Routing
+	clientRoutes := []string{
+		"/",
+		"/about",
+	}
+
+	for _, route := range clientRoutes {
+		app.Get(route, func(c *fiber.Ctx) error {
+			return c.Render("index", nil)
+		})
+	}
 
 	app.Listen(":" + os.Getenv("PORT"))
 }
